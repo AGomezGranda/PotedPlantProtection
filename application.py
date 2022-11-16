@@ -6,6 +6,9 @@ import re
 import MySQLdb.cursors
 
 
+#If using xampp the app should be in htdocs
+
+
 # from flask_mail import Mail, Message
 
 app = Flask(__name__)
