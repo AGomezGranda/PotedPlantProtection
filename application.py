@@ -36,7 +36,7 @@ def index():
 #Change accounts table to users, username and password dont change, no encryption
 @app.route('/login', methods =['GET', 'POST'])
 def login():
-    msg = ''
+    msg = 'Enter user details here'
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']

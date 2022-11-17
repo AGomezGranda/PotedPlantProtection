@@ -18,9 +18,9 @@
 
 /* Colors */
 :root {
-  --color-default: #222222;
-  --color-primary: #008374;
-  --color-secondary: #f85a40;
+    --color-default: #222222;
+    --color-primary: #FFA500;
+    --color-secondary: #f85a40;
 }
 
 /* Smooth scroll behavior */
@@ -248,12 +248,12 @@ section {
 # Header
 --------------------------------------------------------------*/
 .topbar {
-  background: #00796b;
-  height: 40px;
-  font-size: 14px;
-  transition: all 0.5s;
-  color: #fff;
-  padding: 0;
+    background: #F98D00;
+    height: 40px;
+    font-size: 14px;
+    transition: all 0.5s;
+    color: #fff;
+    padding: 0;
 }
 
 .topbar .contact-info i {
@@ -1029,9 +1029,9 @@ section {
   color: var(--color-primary);
 }
 
-.services .service-item:hover .icon:before {
-  background: #00b6a1;
-}
+    .services .service-item:hover .icon:before {
+        background: var(--color-primary);
+    }
 
 .services .service-item:hover h3 {
   border-color: var(--color-primary);
@@ -2005,17 +2005,17 @@ section {
 }
 
 .hero .icon-box {
-  padding: 60px 30px;
-  position: relative;
-  overflow: hidden;
-  background: #008d7d;
-  box-shadow: 0 0 29px 0 rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease-in-out;
-  border-radius: 8px;
-  z-index: 1;
-  height: 100%;
-  width: 100%;
-  text-align: center;
+    padding: 60px 30px;
+    position: relative;
+    overflow: hidden;
+    background: #F98D00;
+    box-shadow: 0 0 29px 0 rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }
 
 .hero .icon-box .title {
@@ -2039,14 +2039,15 @@ section {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.hero .icon-box:hover {
-  background: #009786;
-}
+    .hero .icon-box:hover {
+        background: white;
+        border: 1px medium black;
+    }
 
-.hero .icon-box:hover .title a,
-.hero .icon-box:hover .icon {
-  color: #fff;
-}
+        .hero .icon-box:hover .title a,
+        .hero .icon-box:hover .icon {
+            color: #F98D00;
+        }
 
 /*--------------------------------------------------------------
 # Blog
