@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2022 a las 11:56:22
+-- Tiempo de generación: 17-11-2022 a las 15:15:41
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -45,6 +45,7 @@ CREATE TABLE `events` (
 
 CREATE TABLE `inventary` (
   `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `plantName` text NOT NULL,
   `plantType` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -53,8 +54,17 @@ CREATE TABLE `inventary` (
 -- Volcado de datos para la tabla `inventary`
 --
 
-INSERT INTO `inventary` (`id`, `plantName`, `plantType`) VALUES
-(1, 'veaaloe', 'Aloe Vera');
+INSERT INTO `inventary` (`id`, `userId`, `plantName`, `plantType`) VALUES
+(1, 0, 'veaaloe', 'Aloe Vera'),
+(7, 8, 'dddd', 'Aloe Vera'),
+(8, 8, 'xsxs', 'Lemon Tree'),
+(9, 2, 'xsxsxdxd', 'Peace Lily'),
+(10, 9, 'Yellow Lemon', 'Lemon Tree'),
+(11, 1, 'RosaRosa', 'Peace Lily'),
+(12, 8, 'dede', 'Peace Lily'),
+(13, 8, 'cdcdcdcdcdcd', 'Peace Lily'),
+(14, 8, 'angel', 'Aloe Vera'),
+(15, 8, 'de', 'Aloe Vera');
 
 -- --------------------------------------------------------
 
@@ -102,10 +112,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`Id`, `name`, `username`, `password`, `email`) VALUES
 (1, 'alvarogomez', 'agomez', 'sisisi', 'mail@mail.com'),
-(2, 'aaa', 'aaa', 'aaa', 'aaa'),
-(6, 'claimsList', 'a.gomez191@usp.ceu.es', 'a.gomez', 'a.gomez191@usp.ceu.es'),
-(7, 'Acme', 'aaaaaa', 'aaaaaa', 'aaaaaa@mail.com'),
-(8, 'tim', 'tim', 'tim', 'tim@mail.com');
+(2, 'aaa', 'aaa', 'aaa\r\n', 'aaa@mail.com'),
+(8, 'tim', 'tim', 'tim', 'tim@mail.com'),
+(9, 'James Smith', 'jamesSmith72', 'jamessmith', 'james.smith@gmail.com');
 
 --
 -- Índices para tablas volcadas
@@ -149,7 +158,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT de la tabla `inventary`
 --
 ALTER TABLE `inventary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `plants`
@@ -161,7 +170,7 @@ ALTER TABLE `plants`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -153,6 +153,11 @@ def myplant():
 def notifications():
     return render_template("notifications.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
 if __name__ == '__main__':
         
     login_manager = LoginManager()
