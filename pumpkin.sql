@@ -28,13 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `eventsdht11` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `idPlant` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `temperature` int(11) NOT NULL,
-  `humidity` int(11) NOT NULL
+  `humidity` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--load data infile 'C:/Users/angel/3D Objects/dht11data.csv' into table eventsdht11 fields terminated by ',' lines terminated by '\n';
 -- --------------------------------------------------------
 
 --
