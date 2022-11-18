@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2022 a las 15:15:41
+-- Tiempo de generación: 18-11-2022 a las 17:26:30
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -24,17 +24,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `events`
+-- Estructura de tabla para la tabla `eventsdht11`
 --
 
-CREATE TABLE `events` (
+CREATE TABLE `eventsdht11` (
   `id` int(11) NOT NULL,
   `idPlant` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `temperature` int(11) NOT NULL,
-  `uv` int(11) NOT NULL,
-  `humidity` int(11) NOT NULL,
-  `moisture` int(11) NOT NULL
+  `humidity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `eventssi1145`
+--
+
+CREATE TABLE `eventssi1145` (
+  `id` int(11) NOT NULL,
+  `idPlant` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `uv` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `eventssoilmoisture`
+--
+
+CREATE TABLE `eventssoilmoisture` (
+  `id` int(11) NOT NULL,
+  `idPlant` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `soilMoisture` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -121,9 +145,21 @@ INSERT INTO `users` (`Id`, `name`, `username`, `password`, `email`) VALUES
 --
 
 --
--- Indices de la tabla `events`
+-- Indices de la tabla `eventsdht11`
 --
-ALTER TABLE `events`
+ALTER TABLE `eventsdht11`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `eventssi1145`
+--
+ALTER TABLE `eventssi1145`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `eventssoilmoisture`
+--
+ALTER TABLE `eventssoilmoisture`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -149,9 +185,21 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `events`
+-- AUTO_INCREMENT de la tabla `eventsdht11`
 --
-ALTER TABLE `events`
+ALTER TABLE `eventsdht11`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `eventssi1145`
+--
+ALTER TABLE `eventssi1145`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `eventssoilmoisture`
+--
+ALTER TABLE `eventssoilmoisture`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
