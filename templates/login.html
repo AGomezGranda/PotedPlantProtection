@@ -1,21 +1,100 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="loginDiv">
-    <div class="row">
-        <div class="col-sm-6 offset-sm-3">
-            <div class="jumbotron">
-                <form action="{{ url_for('login') }}" method="post">
-                    <div class="msg">{{ msg }}</div>
-                    <input id="username" name="username" type="text" autocomplete="off" placeholder="Enter Your Username..." class="form-control" /> 
-                    <input id="password" name="password" type="password" placeholder="Enter Your Password..." class="form-control" /> 
-                    <input type="submit" class="btn btn-secondary" value="LOGIN"> 
-                </form>
-                <br />
-                <p class="bottom">Don't have an account?  Sign up <a class="bottom" href="{{url_for('register')}}">here</a></p>
+<!-- <div class="container"> -->
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col-md-6 offset-md-3"> -->
+<!-- 			<h2 class="text-center text-dark mt-5">Login Form</h2> -->
+<!-- 			<div class="card my-5"> -->
+<!-- -->
+<!-- 				<form class="card-body cardbody-color p-lg-5" action="{{ url_for('login') }}" method="post"> -->
+<!-- -->
+<!-- 					<div class="text-center"> -->
+<!-- 						<img src="../static/img/Image.jpeg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" -->
+<!-- 						     width="200px" alt="profile"> -->
+<!-- 					</div> -->
+<!-- -->
+<!-- 					<div class="mb-3"> -->
+<!-- 						<input id="username" name="username" type="text" autocomplete="off" placeholder="User Name" class="form-control" /> -->
+<!-- -->
+<!-- 						 -->
+<!-- -->
+<!-- 					</div> -->
+<!-- 					<div class="mb-3"> -->
+<!-- 						<input id="password" name="password" type="password" placeholder="Password" class="form-control" /> -->
+<!-- 					</div> -->
+<!-- 					<div class="text-center"><button type="submit" value="LOGIN" class="btn btn-color px-5 mb-5 w-100">Login</button></div> -->
+<!-- 					<div id="emailHelp" class="form-text text-center mb-5 text-dark"> -->
+<!-- 						Not -->
+<!-- 						Registered? <a href="{{url_for('register')}}" class="text-dark fw-bold"> -->
+<!-- 							Create an -->
+<!-- 							Account -->
+<!-- 						</a> -->
+<!-- 					</div> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
 
-            </div>
-        </div>
-    </div>
+
+<!-- Main Content -->
+<div class="container-fluid">
+	<div class="row main-content bg-success text-center">
+		<div class="col-md-4 text-center company__info">
+			<span class="company__logo"><img src="../static/img/Image.jpeg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+			                                 width="200px" alt="profile"><h2><span class="fa fa-android"></span></h2></span>
+			<h4 class="company_title">
+			</h4>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2>Log In</h2>
+					</div>
+					<div class="row">
+						<form action="{{ url_for('login') }}"  method="post" control="" class="form-group">
+							<div class="row">
+								<input class="form__input" id="username" name="username" type="text" autocomplete="off" placeholder="User Name"  />
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<input class="form__input" id="password" name="password" type="password" placeholder="Password"  />
 </div>
+						<div class="row">
+							
+						</div>
+						<div class="row">
+							<input type="submit" value="LOGIN" class="btn">
+						</div>
+					</form>
+				</div>
+				<div class="row">
+					<p>Don't have an account? <a href="{{url_for('register')}}">Register Here</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Footer -->
+
+
+<!-- <div class="loginDiv"> -->
+<!--     <div class="row"> -->
+<!--         <div class="col-sm-6 offset-sm-3"> -->
+<!--             <div class="jumbotron"> -->
+<!--                 <form action="{{ url_for('login') }}" method="post"> -->
+<!--                     <div class="msg">{{ msg }}</div> -->
+<!--                     <input id="username" name="username" type="text" autocomplete="off" placeholder="Enter Your Username..." class="form-control" />  -->
+<!--                     <input id="password" name="password" type="password" placeholder="Enter Your Password..." class="form-control" />  -->
+<!--                     <input type="submit" class="btn btn-secondary" value="LOGIN">  -->
+<!--                 </form> -->
+<!--                 <br /> -->
+<!--                 <p class="bottom">Don't have an account?  Sign up <a class="bottom" href="{{url_for('register')}}">here</a></p> -->
+<!-- -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
+<!-- </div> -->
 {% endblock %}
