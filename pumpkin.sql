@@ -32,7 +32,7 @@ CREATE TABLE `eventsdht11` (
   `idPlant` int(11) NOT NULL,
   `temperature` int(11) NOT NULL,
   `humidity` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --load data infile 'C:/Users/angel/3D Objects/dht11data.csv' into table eventsdht11 fields terminated by ',' lines terminated by '\n';
@@ -45,8 +45,8 @@ CREATE TABLE `eventsdht11` (
 CREATE TABLE `eventssi1145` (
   `id` int(11) NOT NULL,
   `idPlant` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `uv` int(11) NOT NULL
+  `uv` int(11) NOT NULL,
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -58,8 +58,8 @@ CREATE TABLE `eventssi1145` (
 CREATE TABLE `eventssoilmoisture` (
   `id` int(11) NOT NULL,
   `idPlant` int(11) NOT NULL,
-  `date` datetime NOT NULL,
   `soilMoisture` int(11) NOT NULL
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
