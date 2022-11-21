@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2022 a las 17:26:30
+-- Tiempo de generación: 21-11-2022 a las 13:30:23
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -28,14 +28,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `eventsdht11` (
-  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `idPlant` int(11) NOT NULL,
   `temperature` int(11) NOT NULL,
   `humidity` int(11) NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---load data infile 'C:/Users/angel/3D Objects/dht11data.csv' into table eventsdht11 fields terminated by ',' lines terminated by '\n';
+--
+-- Volcado de datos para la tabla `eventsdht11`
+--
+
+INSERT INTO `eventsdht11` (`id`, `idPlant`, `temperature`, `humidity`, `date`) VALUES
+(1, 10, 22, 42, '2022-11-21 11:26:01'),
+(2, 10, 22, 42, '2022-11-21 11:26:08'),
+(3, 10, 22, 42, '2022-11-21 11:26:15');
+
 -- --------------------------------------------------------
 
 --
@@ -45,8 +53,8 @@ CREATE TABLE `eventsdht11` (
 CREATE TABLE `eventssi1145` (
   `id` int(11) NOT NULL,
   `idPlant` int(11) NOT NULL,
-  `uv` int(11) NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `uv` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -58,8 +66,8 @@ CREATE TABLE `eventssi1145` (
 CREATE TABLE `eventssoilmoisture` (
   `id` int(11) NOT NULL,
   `idPlant` int(11) NOT NULL,
+  `date` datetime NOT NULL,
   `soilMoisture` int(11) NOT NULL
-  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -89,7 +97,9 @@ INSERT INTO `inventary` (`id`, `userId`, `plantName`, `plantType`) VALUES
 (12, 8, 'dede', 'Peace Lily'),
 (13, 8, 'cdcdcdcdcdcd', 'Peace Lily'),
 (14, 8, 'angel', 'Aloe Vera'),
-(15, 8, 'de', 'Aloe Vera');
+(15, 8, 'de', 'Aloe Vera'),
+(16, 8, 'xdxdxdxxdxd', 'Peace Lily'),
+(17, 8, 'xdxd', 'Peace Lily');
 
 -- --------------------------------------------------------
 
@@ -189,7 +199,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `eventsdht11`
 --
 ALTER TABLE `eventsdht11`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `eventssi1145`
@@ -207,7 +217,7 @@ ALTER TABLE `eventssoilmoisture`
 -- AUTO_INCREMENT de la tabla `inventary`
 --
 ALTER TABLE `inventary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `plants`
