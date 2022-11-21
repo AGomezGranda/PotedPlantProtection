@@ -2,12 +2,13 @@
 {% block body %}
 
 <br>
-<h2 class="text-center"> My Plants </h2>
+<h2 class="text-center"> Plant Information </h2>
 <br>
 
 <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      <div class="jumbotron ">
+      <div class="jumbotron">
+        <h2 class = "">Welcome, {{ username }}</h2> <br>
         <table class="table">
           <thead>
           <tr>
@@ -22,24 +23,21 @@
           </tr>
           </thead>
           <tbody>
-          {% for inventary in inventary %}
-          {% for plantData in plantData %}
-            <tr>
-
-              <td>{{inventary[2]}}</td>
-              <td>{{inventary[3]}}</td>
-              
-              <td>{{plantData[2]}}</td>
-              <td>{{plantData[3]}}</td>
-              <td>{{plantData[4]}}</td>
-              
-               <td> <a type="button" class="btn btn-primary" href="plant_info"> More Info</a> </td>
+            {% for inventary in inventary %}
+            {% for newPlantData in newPlantData %}
+              <tr>
+                <td>{{inventary[2]}}</td>
+                <td>{{inventary[3]}}</td>
+                
+                <td>{{newPlantData[2]}}</td>
+                <td>{{newPlantData[3]}}</td>
+                <td>{{newPlantData[4]}}</td>
             </tr>
           {% endfor %}
           {% endfor %}
           </tbody>
         </table>
-        <a type= "button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>
+        <a type= "button" class="btn btn-secondary btn-lg btn-block" href="myplant">My Plants</a>
       </div>
     </div>
   </div>

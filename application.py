@@ -139,15 +139,56 @@ def myplant():
 
     username=session['username']
     
+    #select user id
     cur1 = mysql.connection.cursor()
     cur1.execute("select Id from users where username = %s", (username, ))
     userId = cur1.fetchone()
 
+    #obtain all the plants for a user
     cur2 = mysql.connection.cursor()
     cur2.execute("select * from inventary where userId = %s", (userId, ))
     inventary = cur2.fetchall()
 
-    return render_template("myplant.html", username=session['username'], inventary=inventary)
+    #obtain the plant Id 
+    cur3 = mysql.connection.cursor()
+    cur3.execute("select id from inventary where userId = %s", (userId,))
+    plantId = cur3.fetchone()
+
+    # select the specific plant for each user
+    cur4 = mysql.connection.cursor()
+    cur4.execute("select *, max(date) from eventsdht11 where idPlant = %s", (plantId,))
+    plantData = cur4.fetchall()
+
+    
+    return render_template("myplant.html", username=session['username'], inventary=inventary, plantData=plantData)
+
+
+@app.route("/plant_info", methods=["GET", "POST"])
+def plant_info():
+    username=session['username']
+    
+    #select user id
+    cur5 = mysql.connection.cursor()
+    cur5.execute("select Id from users where username = %s", (username, ))
+    userId = cur5.fetchone()
+
+    #obtain all the plants for a user
+    cur6 = mysql.connection.cursor()
+    cur6.execute("select * from inventary where userId = %s", (userId, ))
+    inventary = cur6.fetchall()
+
+    #obtain the plant Id 
+    cur7 = mysql.connection.cursor()
+    cur7.execute("select id from inventary where userId = %s", (userId,))
+    plantId = cur7.fetchone()
+
+    # select the specific plant for each user
+    cur8 = mysql.connection.cursor()
+    cur8.execute("select *  from eventsdht11 where idPlant = %s", (plantId,))
+    newPlantData = cur8.fetchall()
+
+    
+    return render_template("plant_info.html", username=session['username'], inventary=inventary, newPlantData=newPlantData)
 
 @app.route("/notifications")
 def notifications():
