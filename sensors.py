@@ -7,8 +7,8 @@ from pubnub.pubnub import PubNub
 
 pnconfig = PNConfiguration()
 
-pnconfig.subscribe_key = 'sub-c-99b2f757-497d-4a91-861b-95ce13125533'
-pnconfig.publish_key = 'pub-c-d6e8028a-60ab-4860-85d8-84e6af8d04a6'
+pnconfig.subscribe_key = 'sub-c-99b2f757'
+pnconfig.publish_key = 'pub-c-d6e8028a'
 pnconfig.user_id = '6e6e91be-676d-11ed-9022-0242ac120002'
 pubnub = PubNub(pnconfig)
 
