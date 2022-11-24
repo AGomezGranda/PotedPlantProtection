@@ -1,20 +1,42 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import *
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
-import os
 import re
 import MySQLdb.cursors
 
+#more imports needed
+import os
+# import pathlib
+# import json
+# from google.oauth2 import id_token
+# from google_auth_oauthlib.flow import Flow
+# from pip._vendor import cachecontrol
+# import google.auth.transport.requests
 
 #If using xampp the app should be in htdocs
 
-
 # from flask_mail import Mail, Message
+#id client: 213632119548-tkqrhivleie1roe09eg2b63m9utk6f65.apps.googleusercontent.com
+#client secret: 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
 
 app = Flask(__name__)
 
 app.secret_key = "xyz"
- 
+# GOOGLE_CLIENT_ID =  "213632119548-tkqrhivleie1roe09eg2b63m9utk6f65.apps.googleusercontent.com"
+# clients_secret_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+# flow = Flow.from_client_secret_file(clients_secret_file=clients_secret_file, 
+#         scope=[], redirect_uri="https://timpumpkin.tk/callback")
+
+# #logi required function
+# def login_required(function):
+#     def wrapper(*args, **kwargs):
+#         if "google_id" not in session:
+#             return abort(401)
+#         else: 
+#             return function()
+#     return wrapper
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -27,6 +49,7 @@ PLANTS = ['Aloe Vera', 'Peace Lily', 'Lemon Tree']
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    # return render_template("google_login.html")
     if request.method == "GET":
         return render_template("index.html")
     elif request.method == "POST":
@@ -37,6 +60,12 @@ def index():
 @app.route('/login', methods =['GET', 'POST'])
 def login():
     msg = 'Enter user details here'
+
+    # google login    
+    # authorization_url, state = flow.authorization_url()
+    # session["state"] = state
+    # return redirect(authorization_url)
+
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
@@ -60,15 +89,42 @@ def login():
 def profile():
     return render_template('profile.html', plantTypes=PLANTS, username=session['username'],  password=session['password'], email=session['email'])
 
+# @app.route('callback')
+# def callback():
+#     flow.fetch_tolen(authorization_response = request.url)
+#     if not session["state"]==request.args["state"]:
+#         abort(501)
+    
+#     credentials = flow.credentials
+#     request_session = request_session()
+#     cached_session = cachecontrol.CacheControl(request_session)
+#     token_request = google.auth.transport.requests.Request(session=cached_session)
+
+#     id_info = id_token.verify_oauth2_token(id_token=credentials._id_token, 
+#         request=token_request, 
+#         audience=GOOGLE_CLIENT_ID)
+
+#     session["google_id"] = id_info
+
 @app.route('/logout')
 # @flask_login.login_required
 def logout():
-    # logout_user()
+
+    # google logout
+    # session.clear()
+    # return redirect("/")
+    
+    #  logout_user()
     session.pop('loggedin', None)
     # session.pop('id', None)
     session.pop('username', None)
     session.pop('password', None)
     return redirect(url_for('login'))
+
+
+# @app.route('/secure_area')
+# def secure_area():
+
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
@@ -158,10 +214,8 @@ def myplant():
     cur4 = mysql.connection.cursor()
     cur4.execute("select *, max(date) from eventsdht11 where idPlant = %s", (plantId,))
     plantData = cur4.fetchall()
-
     
     return render_template("myplant.html", username=session['username'], inventary=inventary, plantData=plantData)
-
 
 @app.route("/plant_info", methods=["GET", "POST"])
 def plant_info():
