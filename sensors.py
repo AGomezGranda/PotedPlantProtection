@@ -4,16 +4,18 @@ from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
+import sys
+import Adafruit_DHT
 
 pnconfig = PNConfiguration()
 
-pnconfig.subscribe_key = 'sub-c-99b2f757'
-pnconfig.publish_key = 'pub-c-d6e8028a'
+pnconfig.subscribe_key = 'sub-c-99b2f757-497d-4a91-861b-95ce13125533'
+pnconfig.publish_key = 'pub-c-d6e8028a-60ab-4860-85d8-84e6af8d04a6'
 pnconfig.user_id = '6e6e91be-676d-11ed-9022-0242ac120002'
 pubnub = PubNub(pnconfig)
 
-my_channel = "Channel-123"
-sensors_list = ["temperature", "humidity"]
+my_channel = "Channel-Pumpkin"
+sensors_list = ["dht11"]
 data = {}
 
 def my_publish_callback(envelope, status):
@@ -63,9 +65,9 @@ class MySubscribeCallback(SubscribeCallback):
         keys = list(event_data.keys())
         if key[0] in sensors_list:
             if event_data[key[0]] is True:
-                data["alarm"] = True
+                data["dht11"] = True
             elif event_data[key[0]] is False:
-                data["alarm"] = False
+                data["dht11"] = False
 
 def publish(pub_channel, msg):
     pubnub.publish().channel(pub_channel).message(msg).pn_async(my_publish_callback)
@@ -79,19 +81,18 @@ id=int(0)
 idPlant=int(1)
 instance = dht11.DHT11(pin=4)
 
-with open('dht11data.csv','w') as file:
-
+def temp_humidity():
     while True:
-        result = instance.read()
-        if result.is_valid():
-            id=id + 1
-            file.write("{:s},{:s},{:f},{:f},{:s}\n".format(
-                str(id),str(idPlant),
-                result.temperature,
-                result.humidity,
-                str(datetime.datetime.now())
-                ))
-            time.sleep(2)
+        humidity, temperature = Adafruit_DHT.read_retry(11, 4)
+        print('Temp: {0:0.1f} C Humidity: {1:0.1f} %'.format(temperature, humidity))
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    sensors_thread = threading.Thread(target=temp_humidity())
+    sensors_thread.start()
+    pubnub.add_listener(MySubscribeCallback())
+    pubnub.subscribe().channels(my_channel).execute()
 
 
 # PIR_pin = 23
@@ -129,8 +130,3 @@ with open('dht11data.csv','w') as file:
 #             beep(2)
 
 
-if __name__ == '__main__':
-    sensors_thread = threading.Thread(target=motion_detection)
-    sensors_thread.start()
-    pubnub.add_listener(MySubscribeCallback())
-    pubnub.subscribe().channels(my_channel).execute()

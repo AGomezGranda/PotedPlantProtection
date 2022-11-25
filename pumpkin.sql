@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2022 a las 13:30:23
+-- Tiempo de generación: 24-11-2022 a las 21:38:21
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -42,7 +42,9 @@ CREATE TABLE `eventsdht11` (
 INSERT INTO `eventsdht11` (`id`, `idPlant`, `temperature`, `humidity`, `date`) VALUES
 (1, 10, 22, 42, '2022-11-21 11:26:01'),
 (2, 10, 22, 42, '2022-11-21 11:26:08'),
-(3, 10, 22, 42, '2022-11-21 11:26:15');
+(3, 10, 22, 42, '2022-11-21 11:26:15'),
+(4, 18, 19, 33, '2022-11-24 20:03:55'),
+(5, 18, 21, 88, '2022-11-24 20:04:02');
 
 -- --------------------------------------------------------
 
@@ -99,7 +101,9 @@ INSERT INTO `inventary` (`id`, `userId`, `plantName`, `plantType`) VALUES
 (14, 8, 'angel', 'Aloe Vera'),
 (15, 8, 'de', 'Aloe Vera'),
 (16, 8, 'xdxdxdxxdxd', 'Peace Lily'),
-(17, 8, 'xdxd', 'Peace Lily');
+(17, 8, 'xdxd', 'Peace Lily'),
+(18, 9, 'james aloe', 'Aloe Vera'),
+(19, 8, 'frim', 'Peace Lily');
 
 -- --------------------------------------------------------
 
@@ -199,7 +203,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `eventsdht11`
 --
 ALTER TABLE `eventsdht11`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `eventssi1145`
@@ -217,7 +221,7 @@ ALTER TABLE `eventssoilmoisture`
 -- AUTO_INCREMENT de la tabla `inventary`
 --
 ALTER TABLE `inventary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `plants`
