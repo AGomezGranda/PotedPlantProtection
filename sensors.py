@@ -1,11 +1,12 @@
 import RPi.GPIO as GPIO
 import time, threading, dht11
+import sys
+import Adafruit_DHT
+
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
-import sys
-import Adafruit_DHT
 
 pnconfig = PNConfiguration()
 
@@ -13,6 +14,15 @@ pnconfig.subscribe_key = 'sub-c-99b2f757-497d-4a91-861b-95ce13125533'
 pnconfig.publish_key = 'pub-c-d6e8028a-60ab-4860-85d8-84e6af8d04a6'
 pnconfig.user_id = '6e6e91be-676d-11ed-9022-0242ac120002'
 pubnub = PubNub(pnconfig)
+
+#Sensors to PIN numbers
+
+#DHT Sensor (model type 22) is connected to GPIO17
+sensor = 22
+pin = 17
+#Soil Moisture sensor is connected to GPIO14 as a button
+#soil = Button(14)
+
 
 my_channel = "Channel-Pumpkin"
 sensors_list = ["dht11"]
@@ -44,7 +54,7 @@ class MySubscribeCallback(SubscribeCallback):
 
         elif status.category == PNStatusCategory.PNDecryptionErrorCategory:
             pass
-            # Client configured to encrypt messages and the live feed recevies plain text
+            # Client configured to encrypt messages and the live feed recevies plain text   
 
     def message(self, pubnub, message):
         try:
@@ -72,13 +82,18 @@ class MySubscribeCallback(SubscribeCallback):
 def publish(pub_channel, msg):
     pubnub.publish().channel(pub_channel).message(msg).pn_async(my_publish_callback)
 
+
+#For enable sending out message, declare publisher callback
+def publish_callback(result, status):
+  pass
+
 #Function for sensor dht11 and csv output
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
-id=int(0)
-idPlant=int(1)
+# id=int(0)
+# idPlant=int(1)
 instance = dht11.DHT11(pin=4)
 
 def temp_humidity():
@@ -87,6 +102,7 @@ def temp_humidity():
         print('Temp: {0:0.1f} C Humidity: {1:0.1f} %'.format(temperature, humidity))
         time.sleep(1)
 
+pubnub.publish().channel('channel-pumpkin').message([DHT_Read]).pn_async(publish_callback)
 
 if __name__ == '__main__':
     sensors_thread = threading.Thread(target=temp_humidity())

@@ -1,49 +1,52 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<br>
-<h2 class="text-center"> My Plants </h2>
-<br>
+<body onload="keepAlive(); time();">
+  <br>
+  <h2 class="text-center"> My Plants </h2>
+  <br>
+  
+  <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <div class="jumbotron ">
+          
+          <h2>Connection: <span id="Connection_id">...</span></h2>
 
-<div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <div class="jumbotron ">
-        <h5> userId: {{userId}} </h5>
-        <table class="table">
-          <thead>
-          <tr>
-            <th scope="col"> Plant Name </th>
-            <th scope="col"> Plant Type </th>
-            <th scope="col"> Temperature </th>
-            <!-- <th scope="col"> UV </th>
-            <th scope="col"> Moisture </th> -->
-            <th scope="col"> Humidity </th>
-            <th scope="col"> Date </th> 
-           
-          </tr>
-          </thead>
-          <tbody>
-          {% for inventary in inventary %}
-          {% for plantData in plantData %}
+          <h5> userId: {{userId}} </h5>
+          <table class="table">
+            <thead>
             <tr>
+              <th scope="col"> Plant Name </th>
+              <th scope="col"> Plant Type </th>
+              <th scope="col"> Temperature </th>
+              <th scope="col"> Humidity </th>
+              <th scope="col"> Date </th> 
 
-              <td>{{inventary[2]}}</td>
-              <td>{{inventary[3]}}</td>
-
-              <td>{{plantData[2]}}</td>
-              <td>{{plantData[3]}}</td>   
-              <td>{{plantData[4]}}</td>
-
-              
-               <td> <a type="button" class="btn btn-primary" href="plant_info"> More Info</a> </td>
+             
             </tr>
-          {% endfor %}
-          {% endfor %}
-          </tbody>
-        </table>
-        <a type= "button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>
+            </thead>
+            <tbody>
+            {% for plantData in plantData %}
+            
+              <tr>
+  
+                <td>{{plantData[2]}}</td>
+                <td>{{plantData[3]}}</td>
+                <td> <span id="dht11-temp">...</span></td>
+                <td><span id="dht11-hum">...</span></td>
+                <td><span id="dht11-date">...</span></td>
+                  
+                <td> <a type="button" class="btn btn-primary" href="plant_info"> More Info</a> </td>
+              </tr>
+            {% endfor %}
+          
+            </tbody>
+          </table>
+          <a type= "button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>
+        </div>
       </div>
     </div>
-  </div>
+  
+</body>
 
 {% endblock %}

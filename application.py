@@ -7,7 +7,7 @@ import MySQLdb.cursors
 #more imports needed
 import os
 # import pathlib
-# import json
+import json
 # from google.oauth2 import id_token
 # from google_auth_oauthlib.flow import Flow
 # from pip._vendor import cachecontrol
@@ -36,6 +36,9 @@ app.secret_key = "xyz"
 #         else: 
 #             return function()
 #     return wrapper
+
+alive = 0
+data = {}
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -203,20 +206,20 @@ def myplant():
 
     #obtain all the plants for a user
     cur2 = mysql.connection.cursor()
-    cur2.execute("select * from inventary where userId = %s", (userId, ))
+    cur2.execute("SELECT * FROM `vi_more_recent_v2`")
     inventary = cur2.fetchall()
 
     # #obtain the plant Id 
-    cur3 = mysql.connection.cursor()
-    cur3.execute("select id from inventary where userId = 9")
-    plantId = cur3.fetchone()
+    # cur3 = mysql.connection.cursor()
+    # cur3.execute("select id from inventary where userId = 9")
+    # plantId = cur3.fetchone()
 
-    # select the specific plant for each user
+    # #select the specific plant for each user
     cur4 = mysql.connection.cursor()
-    cur4.execute("select * from eventsdht11 where idPlant = %s", (plantId,))
+    cur4.execute("SELECT inventary.id, inventary.userId, inventary.plantName, inventary.plantType, vi_more_recent_v2.temperature, vi_more_recent_v2.humidity, vi_more_recent_v2.date, users.name FROM inventary JOIN vi_more_recent_v2 ON inventary.id = vi_more_recent_v2.idPlant JOIN users ON users.Id = inventary.userId")
     plantData = cur4.fetchall()
     
-    return render_template("myplant.html", username=session['username'], userId=session['Id'], inventary=inventary, plantData=plantData)
+    return render_template("myplant.html", username=session['username'], userId=session['Id'], inventary=inventary, plantData=plantData  )
 
 @app.route("/plant_info", methods=["GET", "POST"])
 def plant_info():
@@ -252,6 +255,18 @@ def notifications():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+#keep alive funtion
+@app.route("/keep_alive")
+def keep_alive():
+    global alive, data
+    alive += 1
+    keep_alive_count = str(alive)
+    data['keep_alive'] = keep_alive_count
+    parsed_json = json.dumps(data)
+    print(parsed_json)
+    return str(parsed_json)
 
 
 if __name__ == '__main__':
