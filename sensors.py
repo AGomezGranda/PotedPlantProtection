@@ -1,7 +1,5 @@
 import RPi.GPIO as GPIO
-import time, threading, dht11
-import sys
-import Adafruit_DHT
+import time, threading, dht11, datetime 
 
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
@@ -12,14 +10,10 @@ pnconfig = PNConfiguration()
 
 pnconfig.subscribe_key = 'sub-c-99b2f757-497d-4a91-861b-95ce13125533'
 pnconfig.publish_key = 'pub-c-d6e8028a-60ab-4860-85d8-84e6af8d04a6'
-pnconfig.user_id = '6e6e91be-676d-11ed-9022-0242ac120002'
+pnconfig.user_id = '94af794a-7593-11ed-a1eb-0242ac120002'
 pubnub = PubNub(pnconfig)
 
-#Sensors to PIN numbers
 
-#DHT Sensor (model type 22) is connected to GPIO17
-sensor = 22
-pin = 17
 #Soil Moisture sensor is connected to GPIO14 as a button
 #soil = Button(14)
 
@@ -82,67 +76,53 @@ class MySubscribeCallback(SubscribeCallback):
 def publish(pub_channel, msg):
     pubnub.publish().channel(pub_channel).message(msg).pn_async(my_publish_callback)
 
-
 #For enable sending out message, declare publisher callback
 def publish_callback(result, status):
   pass
 
 #Function for sensor dht11 and csv output
 
+
+''' already imported
+import dht11
+import time
+import datetime
+'''
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
-# id=int(0)
-# idPlant=int(1)
+#id=int(0)
+#idPlant=int(1)
 instance = dht11.DHT11(pin=4)
 
 def temp_humidity():
     while True:
-        humidity, temperature = Adafruit_DHT.read_retry(11, 4)
-        print('Temp: {0:0.1f} C Humidity: {1:0.1f} %'.format(temperature, humidity))
-        time.sleep(1)
+        try:
+            result = instance.read()
+            if result.is_valid():
+            #id=id + 1
+                print("Temp: {:f} C Humidity: {:f} Date: {:s}\n".format(
+                    result.temperature, 
+                    result.humidity, 
+                    str(datetime.datetime.now()) 
+                    ))
+                time.sleep(5)
 
-pubnub.publish().channel('channel-pumpkin').message([DHT_Read]).pn_async(publish_callback)
+            publish(my_channel, {"dht11": {"temperature:": result.temperature, "humidity": result.humidity}})
+
+        except RuntimeError as error:
+        # Errors happen fairly often, DHT's are hard to read, just keep going
+            print(error.args[0])
+            time.sleep(5.0)
+            continue
+        except Exception as error:
+            dhtDevice.exit()
+            raise error
+
 
 if __name__ == '__main__':
     sensors_thread = threading.Thread(target=temp_humidity())
     sensors_thread.start()
     pubnub.add_listener(MySubscribeCallback())
     pubnub.subscribe().channels(my_channel).execute()
-
-
-# PIR_pin = 23
-# Buzzer_pin = 24
-
-# GPIO.setwarnings(False)
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(PIR_pin, GPIO.IN)
-# GPIO.setup(Buzzer_pin, GPIO.OUT)
-
-# def beep(repeat):
-#     for i in range(0, repeat):
-#         for pulse in range(60):
-#             GPIO.output(Buzzer_pin, True)
-#             time.sleep(0.001)
-#             GPIO.output(Buzzer_pin, False)
-#             time.sleep(0.001)
-#         time.sleep(0.02)
-
-
-# def motion_detection():
-#     data["alarm"] = False
-#     trigger = False
-#     while True:
-#         if GPIO.input(PIR_pin):
-#             print("Motion detected")
-#             beep(4)
-#             trigger = True
-#             publish(my_channel, {"motion":"Yes"})
-#             time.sleep(1)
-#         elif trigger:
-#             publish(my_channel, {"motion":"No"})
-#             trigger = False
-#         if data["alarm"]:
-#             beep(2)
-
-
