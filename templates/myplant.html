@@ -1,62 +1,71 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 
 <body>
+  <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
+  <script src="static/js/app.js"></script>
 
-	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
-	<script src="static/js/app.js"></script>
+  <br />
+  <h2 class="text-center">My Plants</h2>
+  <br />
 
-  <br>
-  <h2 class="text-center"> My Plants </h2>
-  <br>
-  
   <div class="row">
-      <div class="col-sm-6 offset-sm-3">
-        <div class="jumbotron ">
-          
-          <h5> userId: {{userId}} </h5>
-          <!-- <table class="table">
-            <thead>
+    <div class="col-sm-6 offset-sm-3">
+      <div class="jumbotron">
+        <h3>Username: {{username}}</h3>
+        <br>
+        <h5>userId: {{userId}}</h5>
+        <br>
+        <table class="table">
+          <thead>
             <tr>
-              <th scope="col"> Temperature </th>
-              <th scope="col"> Humidity </th>
-              <th scope="col"> Date </th> 
-
-             
+              <th scope="col">Plant Name</th>
+              <th scope="col">Plant Type</th>
             </tr>
-            </thead>
-            <tbody>
-              
-              <tr>
-  
-  
-                <td> <span id="dht11-temp">...</span></td>
-                <td><span id="dht11-hum">...</span></td>
-                <td><span id="dht11-date">...</span></td>
-                  
-                <td> <a type="button" class="btn btn-primary" href="plant_info"> More Info</a> </td>
-              </tr>
-          
-            </tbody>
-          </table> -->
+          </thead>
 
-          <div>
-		  <h3>Temperature: <span id="dht11-temp">...</span></h3>
-          </div>
+          <tbody>
+            <tr>
+              {% for inventary in inventary %}
+              <td>{{inventary[2]}}</td>
+              <td>{{inventary[3]}}</td>
+              {% endfor %}
+              <td>
+                <!-- <a type="button" class="btn btn-primary" href="plant_info"> More Info </a> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-          <div>
-		  <h3>Humidity: <span id ="dht11-hum">...</span></h3>
-          </div>
-
-          <div>
-		  <h3>Date: <span id="dht11-date">...</span></h3>
-          </div>
-
-          <a type= "button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>
+        <div>
+          <h3>
+            Temperature:
+            <h5><span id="dht11-temp">...</span></h5>
+          </h3>
         </div>
+
+        <div>
+          <h3>
+            Humidity:
+            <h5><span id="dht11-hum">...</span></h5>
+          </h3>
+        </div>
+
+        <div>
+          <h3>
+            Date:
+            <h5><span id="dht11-date">...</span></h5>
+          </h3>
+        </div>
+
+        <a
+          type="button"
+          class="btn btn-secondary btn-lg btn-block"
+          href="new_plant"
+          >New Plant</a
+        >
       </div>
     </div>
-  
+  </div>
 </body>
 
 {% endblock %}

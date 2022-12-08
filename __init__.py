@@ -12,7 +12,7 @@ app.secret_key = "xyz"
  
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Pumpkin1!'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'pumpkin'
  
 mysql = MySQL(app)
@@ -130,9 +130,8 @@ def new_plant():
 # @flask_login.login_required
 def myplant():    
     userId = session['Id']
-    return render_template("myplant.html", userId=session['Id'])
-
-'''
+    username=session['username']
+    
    #select user id
     cur1 = mysql.connection.cursor()
     cur1.execute("select Id from users where username = %s", (username, ))
@@ -143,6 +142,9 @@ def myplant():
     cur2.execute("select * from inventary where userId = %s", (userId, ))
     inventary = cur2.fetchall()
 
+    return render_template("myplant.html", userId=session['Id'], username = session['username'], inventary=inventary)
+
+'''
     #obtain the plant Id 
     cur3 = mysql.connection.cursor()
     cur3.execute("select id from inventary where userId = %s", (userId,))
@@ -154,7 +156,6 @@ def myplant():
     cur4.execute("select *, max(date)  from eventsdht11 where idPlant = %s", (plantId,))
     plantData = cur4.fetchall()
 '''
-
 
 @app.route("/plant_info", methods=["GET", "POST"])
 def plant_info():
