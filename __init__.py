@@ -1,74 +1,35 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import *
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
+import os
 import re
 import MySQLdb.cursors
 
-#more imports needed
-import os
-# import pathlib
-import json
-# from google.oauth2 import id_token
-# from google_auth_oauthlib.flow import Flow
-# from pip._vendor import cachecontrol
-# import google.auth.transport.requests
-
-#If using xampp the app should be in htdocs
-
-# from flask_mail import Mail, Message
-#id client: 213632119548-tkqrhivleie1roe09eg2b63m9utk6f65.apps.googleusercontent.com
-#client secret: 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
 
 app = Flask(__name__)
 
 app.secret_key = "xyz"
-# GOOGLE_CLIENT_ID =  "213632119548-tkqrhivleie1roe09eg2b63m9utk6f65.apps.googleusercontent.com"
-# clients_secret_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
-
-# flow = Flow.from_client_secret_file(clients_secret_file=clients_secret_file, 
-#         scope=[], redirect_uri="https://timpumpkin.tk/callback")
-
-# #logi required function
-# def login_required(function):
-#     def wrapper(*args, **kwargs):
-#         if "google_id" not in session:
-#             return abort(401)
-#         else: 
-#             return function()
-#     return wrapper
-
-alive = 0
-data = {}
-
+ 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'pumpkin' 
+app.config['MYSQL_PASSWORD'] = 'Pumpkin1!'
+app.config['MYSQL_DB'] = 'pumpkin'
  
 mysql = MySQL(app)
 
 PLANTS = ['Aloe Vera', 'Peace Lily', 'Lemon Tree']
-# REGISTRANTS = {}
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # return render_template("google_login.html")
     if request.method == "GET":
         return render_template("index.html")
     elif request.method == "POST":
       return render_template("greet.html")
 
 #Login method for Flask Python
-#Change accounts table to users, username and password dont change, no encryption
 @app.route('/login', methods =['GET', 'POST'])
 def login():
     msg = 'Enter user details here'
-
-    # google login    
-    # authorization_url, state = flow.authorization_url()
-    # session["state"] = state
-    # return redirect(authorization_url)
-
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
@@ -90,44 +51,17 @@ def login():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html', plantTypes=PLANTS, userId=session['Id'], username=session['username'],  password=session['password'], email=session['email'])
-
-# @app.route('callback')
-# def callback():
-#     flow.fetch_tolen(authorization_response = request.url)
-#     if not session["state"]==request.args["state"]:
-#         abort(501)
-    
-#     credentials = flow.credentials
-#     request_session = request_session()
-#     cached_session = cachecontrol.CacheControl(request_session)
-#     token_request = google.auth.transport.requests.Request(session=cached_session)
-
-#     id_info = id_token.verify_oauth2_token(id_token=credentials._id_token, 
-#         request=token_request, 
-#         audience=GOOGLE_CLIENT_ID)
-
-#     session["google_id"] = id_info
+    return render_template('profile.html', plantTypes=PLANTS, username=session['username'],  password=session['password'], email=session['email'])
 
 @app.route('/logout')
 # @flask_login.login_required
 def logout():
-
-    # google logout
-    # session.clear()
-    # return redirect("/")
-    
-    #  logout_user()
+    # logout_user()
     session.pop('loggedin', None)
     # session.pop('id', None)
     session.pop('username', None)
     session.pop('password', None)
     return redirect(url_for('login'))
-
-
-# @app.route('/secure_area')
-# def secure_area():
-
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
@@ -153,7 +87,7 @@ def register():
             cursor.execute('INSERT INTO users VALUES (NULL, %s, %s, %s, %s)', (name, username, password, email,))
             mysql.connection.commit()
             cursor.close()
-            msg = 'You have successfully registered !'
+            msg = 'You are registered! Click sign in below'
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg)
@@ -194,59 +128,60 @@ def new_plant():
 
 @app.route("/myplant", methods=["GET", "POST"])
 # @flask_login.login_required
-def myplant():
-
-    username=session['username']
+def myplant():    
     userId = session['Id']
-    
-    #select user id
+    return render_template("myplant.html", userId=session['Id'])
+
+'''
+   #select user id
     cur1 = mysql.connection.cursor()
     cur1.execute("select Id from users where username = %s", (username, ))
     userId = cur1.fetchone()
 
     #obtain all the plants for a user
     cur2 = mysql.connection.cursor()
-    cur2.execute("SELECT * FROM `vi_more_recent_v2`")
+    cur2.execute("select * from inventary where userId = %s", (userId, ))
     inventary = cur2.fetchall()
 
-    # #obtain the plant Id 
-    # cur3 = mysql.connection.cursor()
-    # cur3.execute("select id from inventary where userId = 9")
-    # plantId = cur3.fetchone()
+    #obtain the plant Id 
+    cur3 = mysql.connection.cursor()
+    cur3.execute("select id from inventary where userId = %s", (userId,))
+    plantId = cur3.fetchone()
 
-    # #select the specific plant for each user
+    # select the specific plant for each user
     cur4 = mysql.connection.cursor()
-    cur4.execute("SELECT inventary.id, inventary.userId, inventary.plantName, inventary.plantType, vi_more_recent_v2.temperature, vi_more_recent_v2.humidity, vi_more_recent_v2.date, users.name FROM inventary JOIN vi_more_recent_v2 ON inventary.id = vi_more_recent_v2.idPlant JOIN users ON users.Id = inventary.userId")
+    #cur4.execute("select inventary.plantName, inventary.plantType, eventsdht11.temperature, eventsdht11.humidity, eventsdht11.date from eventsdht11 left join inventary on eventsdht11.idPlant = inventary.id;")
+    cur4.execute("select *, max(date)  from eventsdht11 where idPlant = %s", (plantId,))
     plantData = cur4.fetchall()
-    
-    return render_template("myplant.html", username=session['username'], userId=session['Id'], inventary=inventary, plantData=plantData  )
+'''
+
 
 @app.route("/plant_info", methods=["GET", "POST"])
 def plant_info():
     username=session['username']
     
     #select user id
-    # cur5 = mysql.connection.cursor()
-    # cur5.execute("select Id from users where username = %s", (username, ))
-    # userId = cur5.fetchone()
+    cur5 = mysql.connection.cursor()
+    cur5.execute("select Id from users where username = %s", (username, ))
+    userId = cur5.fetchone()
 
     #obtain all the plants for a user
-    # cur6 = mysql.connection.cursor()
-    # cur6.execute("select * from inventary where userId = %s", (userId, ))
-    # inventary = cur6.fetchall()
+    cur6 = mysql.connection.cursor()
+    cur6.execute("select * from inventary where userId = %s", (userId, ))
+    inventary = cur6.fetchall()
 
     #obtain the plant Id 
-    # cur7 = mysql.connection.cursor()
-    # cur7.execute("select id from inventary where userId = %s", (userId,))
-    # plantId = cur7.fetchone()
+    cur7 = mysql.connection.cursor()
+    cur7.execute("select id from inventary where userId = %s", (userId,))
+    plantId = cur7.fetchone()
 
     # select the specific plant for each user
     cur8 = mysql.connection.cursor()
-    cur8.execute("select *  from eventsdht11")
+    cur8.execute("select *  from eventsdht11 where idPlant = %s", (plantId,))
     newPlantData = cur8.fetchall()
 
     
-    return render_template("plant_info.html", username=session['username'], newPlantData=newPlantData)
+    return render_template("plant_info.html", username=session['username'], inventary=inventary, newPlantData=newPlantData)
 
 @app.route("/notifications")
 def notifications():
@@ -255,18 +190,6 @@ def notifications():
 @app.route("/about")
 def about():
     return render_template("about.html")
-
-
-#keep alive funtion
-@app.route("/keep_alive")
-def keep_alive():
-    global alive, data
-    alive += 1
-    keep_alive_count = str(alive)
-    data['keep_alive'] = keep_alive_count
-    parsed_json = json.dumps(data)
-    print(parsed_json)
-    return str(parsed_json)
 
 
 if __name__ == '__main__':

@@ -100,16 +100,17 @@ def temp_humidity():
     while True:
         try:
             result = instance.read()
+            date = str(datetime.datetime.now())
             if result.is_valid():
             #id=id + 1
                 print("Temp: {:f} C Humidity: {:f} Date: {:s}\n".format(
                     result.temperature, 
                     result.humidity, 
-                    str(datetime.datetime.now()) 
-                    ))
+                    date) 
+                    )
                 time.sleep(5)
 
-            publish(my_channel, {"dht11": {"temperature:": result.temperature, "humidity": result.humidity}})
+            publish(my_channel, {"dht11": {"temperature:": result.temperature, "humidity": result.humidity, "date:": date }})
 
         except RuntimeError as error:
         # Errors happen fairly often, DHT's are hard to read, just keep going

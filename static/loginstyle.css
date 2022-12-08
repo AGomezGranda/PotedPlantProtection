@@ -85,9 +85,20 @@ form {
     border: 1px solid #008080;
     margin-top: 1.5em;
     margin-bottom: 1em;
+    margin-left:15%;
+   
 }
+
+.btn btn-secondary btn-lg btn-blocl{
+    text-align: center;
+}
+
 
 .btn:hover, .btn:focus {
     background-color: #008080;
     color: #fff;
+}
+
+.row{
+    max-width:100%;
 }

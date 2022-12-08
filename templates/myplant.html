@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<body onload="keepAlive(); time();">
+<body>
+
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
+	<script src="static/js/app.js"></script>
+
   <br>
   <h2 class="text-center"> My Plants </h2>
   <br>
@@ -10,14 +14,10 @@
       <div class="col-sm-6 offset-sm-3">
         <div class="jumbotron ">
           
-          <h2>Connection: <span id="Connection_id">...</span></h2>
-
           <h5> userId: {{userId}} </h5>
-          <table class="table">
+          <!-- <table class="table">
             <thead>
             <tr>
-              <th scope="col"> Plant Name </th>
-              <th scope="col"> Plant Type </th>
               <th scope="col"> Temperature </th>
               <th scope="col"> Humidity </th>
               <th scope="col"> Date </th> 
@@ -26,22 +26,32 @@
             </tr>
             </thead>
             <tbody>
-            {% for plantData in plantData %}
-            
+              
               <tr>
   
-                <td>{{plantData[2]}}</td>
-                <td>{{plantData[3]}}</td>
+  
                 <td> <span id="dht11-temp">...</span></td>
                 <td><span id="dht11-hum">...</span></td>
                 <td><span id="dht11-date">...</span></td>
                   
                 <td> <a type="button" class="btn btn-primary" href="plant_info"> More Info</a> </td>
               </tr>
-            {% endfor %}
           
             </tbody>
-          </table>
+          </table> -->
+
+          <div>
+		  <h3>Temperature: <span id="dht11-temp">...</span></h3>
+          </div>
+
+          <div>
+		  <h3>Humidity: <span id ="dht11-hum">...</span></h3>
+          </div>
+
+          <div>
+		  <h3>Date: <span id="dht11-date">...</span></h3>
+          </div>
+
           <a type= "button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>
         </div>
       </div>

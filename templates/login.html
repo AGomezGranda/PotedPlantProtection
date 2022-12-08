@@ -54,21 +54,22 @@
 						<h2>Log In</h2>
 					</div>
 					<div class="row">
-						<form action="{{ url_for('login') }}"  method="post" control="" class="form-group">
+						<form action="{{ url_for('login') }}" method="post" control="" class="form-group">
+							<div class="msg">{{ msg }}</div>
 							<div class="row">
-								<input class="form__input" id="username" name="username" type="text" autocomplete="off" placeholder="User Name"  />
+								<input class="form__input" id="username" name="username" type="text" autocomplete="off" placeholder="User Name" />
 							</div>
 							<div class="row">
 								<!-- <span class="fa fa-lock"></span> -->
-								<input class="form__input" id="password" name="password" type="password" placeholder="Password"  />
-</div>
-						<div class="row">
-							
-						</div>
-						<div class="row">
-							<input type="submit" value="LOGIN" class="btn">
-						</div>
-					</form>
+								<input class="form__input" id="password" name="password" type="password" placeholder="Password" />
+							</div>
+							<div class="row">
+
+							</div>
+							<div class="row">
+								<input type="submit" value="LOGIN" class="btn">
+							</div>
+						</form>
 				</div>
 				<div class="row">
 					<p>Don't have an account? <a href="{{url_for('register')}}">Register Here</a></p>
