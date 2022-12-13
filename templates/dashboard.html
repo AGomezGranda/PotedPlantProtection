@@ -1,19 +1,48 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<br>
-<h2 class="text-center"> Dashboard </h2>
-</br>
+<div class="container-fluid">
+    <div class="row main-content bg-success text-center">
+        <div class="col-md-4 text-center company__info">
+            <span class="company__logo">
+                <img src="../static/img/Image.jpeg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                     width="200px" alt="profile"><h2><span class="fa fa-android"></span></h2>
+            </span>
+            <h4 class="company_title">
+                Dashboard
+            </h4>
+        </div>
+        <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+            <div class="container-fluid">
+                <div class="row">
+                    <h2>Hi, {{ username }}</h2>
+                </div>
+                <div class="row">
+                    <form action="{{ url_for('login') }}" method="post" control="" class="form-group">
+                        <div class="msg">{{ msg }}</div>
+                        <div class="row">
+                            <a type="button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>
 
-<div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <div class="jumbotron">
-        <h2> Hi, {{ username }} </h2> <br>
-        <a type="button" class="btn btn-secondary btn-lg btn-block" href="new_plant">New Plant</a>        
-        <a type="button" class="btn btn-secondary btn-lg btn-block" href="myplant">My Plants</a>
-        <a type="button" class="btn btn-secondary btn-lg btn-block" href="notifications">Notifications</a>
-        <a type="button" class="btn btn-secondary btn-lg btn-block" href="#">Need Help</a>
-      </div>
+                        </div>
+                        <div class="row">
+                            <!-- <span class="fa fa-lock"></span> -->
+                            <a type="button" class="btn btn-secondary btn-lg btn-block" href="myplant">My Plants</a>
+
+                        </div>
+                        <div class="row">
+                            <a type="button" class="btn btn-secondary btn-lg btn-block" href="notifications">Notifications</a>
+
+                        </div>
+                        <div class="row">
+                            <a type="button" class="btn btn-secondary btn-lg btn-block" href="#">Need Help</a>
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}
