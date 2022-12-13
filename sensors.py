@@ -22,6 +22,13 @@ my_channel = "Channel-Pumpkin"
 sensors_list = ["dht11"]
 data = {}
 
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+#id=int(0)
+#idPlant=int(1)
+instance = dht11.DHT11(pin=4)
+
 def my_publish_callback(envelope, status):
     # check was the request successfully completed
     if not status.is_error():
@@ -50,29 +57,6 @@ class MySubscribeCallback(SubscribeCallback):
             pass
             # Client configured to encrypt messages and the live feed recevies plain text   
 
-    def message(self, pubnub, message):
-        try:
-            print(message.message, " : ", type(message.message))
-            msg = message.message
-            print("Received json: ", msg)
-            keys = list(msg.keys())
-            if(key[0]) == "event": #{"event" : {"sensors_name":True}}
-                self.handle_event(msg)
-        except Exception as e:
-            print("Received: ", message.message)
-            print(e)
-
-
-    def handle_event(self, msg):
-        global data
-        event_data = msg["event"]
-        keys = list(event_data.keys())
-        if key[0] in sensors_list:
-            if event_data[key[0]] is True:
-                data["dht11"] = True
-            elif event_data[key[0]] is False:
-                data["dht11"] = False
-
 def publish(pub_channel, msg):
     pubnub.publish().channel(pub_channel).message(msg).pn_async(my_publish_callback)
 
@@ -80,21 +64,6 @@ def publish(pub_channel, msg):
 def publish_callback(result, status):
   pass
 
-#Function for sensor dht11 and csv output
-
-
-''' already imported
-import dht11
-import time
-import datetime
-'''
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.cleanup()
-#id=int(0)
-#idPlant=int(1)
-instance = dht11.DHT11(pin=4)
 
 def temp_humidity():
     while True:
@@ -109,8 +78,9 @@ def temp_humidity():
                     date) 
                     )
                 time.sleep(5)
-
-            publish(my_channel, {"dht11": {"temperature:": result.temperature, "humidity": result.humidity, "date:": date }})
+                dictionary = {"dht11": {"Temperature": result.temperature, "Humidity": result.humidity, "Date:": date}}
+            
+                pubnub.publish().channel(my_channel).message(dictionary).pn_async(my_publish_callback)
 
         except RuntimeError as error:
         # Errors happen fairly often, DHT's are hard to read, just keep going

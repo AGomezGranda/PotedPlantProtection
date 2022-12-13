@@ -184,6 +184,20 @@ def plant_info():
     
     return render_template("plant_info.html", username=session['username'], inventary=inventary, newPlantData=newPlantData)
 
+
+@app.route("/save", methods=["POST"])
+def save():
+    #api rest to save the data from the sensor
+    if request.method == "POST":
+        data = request.get_json()
+        print(data)
+        #insert the data in the database
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO eventsdht11 (idPlant, temperature, humidity, date) VALUES (%s, %s, %s, %s)", (1, data['temperature'], data['humidity'], data['date']))
+        mysql.connection.commit()
+        cur.close()
+        return "OK"
+        
 @app.route("/notifications")
 def notifications():
     return render_template("notifications.html")
