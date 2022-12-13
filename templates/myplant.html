@@ -1,71 +1,79 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %}
+{% block body %}
 
-<body>
-  <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
-  <script src="static/js/app.js"></script>
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.0.js"></script>
+    <script src="static/js/app.js"></script>
 
-  <br />
-  <h2 class="text-center">My Plants</h2>
-  <br />
+    <br>
+    <div class="container-fluid">
+        <div class="row main-content bg-success text-center">
+            <div class="col-md-4 text-center company__info">
+                <span class="company__logo">
+                    <img src="../static/img/Image.jpeg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                         width="200px" alt="profile"><h2><span class="fa fa-android"></span></h2>
+                </span>
+                <h4 class="company_title">
+                    Dashboard
+                </h4>
+            </div>
+            <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+                <div class="container-fluid">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="row">
+                            <h2 class="">Your Plants</h2> <br>
+                            <table class="table">
+                                <tr>
+                                    <th scope="col">User ID:</th>
+                                    <td>{{ userId }}</td>
+                                </tr>
+                                {% for inventary in inventary %}
 
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <div class="jumbotron">
-        <h3>Username: {{username}}</h3>
-        <br>
-        <h5>userId: {{userId}}</h5>
-        <br>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Plant Name</th>
-              <th scope="col">Plant Type</th>
-            </tr>
-          </thead>
+                                <tr>
+                                    <th scope="col">Plant Name</th>
+                                    <td>{{inventary[2]}}</td>
+                                </tr>
 
-          <tbody>
-            <tr>
-              {% for inventary in inventary %}
-              <td>{{inventary[2]}}</td>
-              <td>{{inventary[3]}}</td>
-              {% endfor %}
-              <td>
-                <!-- <a type="button" class="btn btn-primary" href="plant_info"> More Info </a> -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                                <tr>
+                                    <th scope="col">Plant Type</th>
+                                    <td>{{inventary[3]}}</td>
+                                </tr>
 
-        <div>
-          <h3>
-            Temperature:
-            <h5><span id="dht11-temp">...</span></h5>
-          </h3>
+                                {% endfor %}
+
+
+                            </table>
+                            <div>
+                                <h3>
+                                    Temperature:
+                                    <h5><span id="dht11-temp">...</span></h5>
+                                </h3>
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Humidity:
+                                    <h5><span id="dht11-hum">...</span></h5>
+                                </h3>
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Date:
+                                    <h5><span id="dht11-date">...</span></h5>
+                                </h3>
+                            </div>
+                            <a type="button"
+                               class="btn btn-secondary btn-lg btn-block"
+                               href="new_plant">New Plant</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-        <div>
-          <h3>
-            Humidity:
-            <h5><span id="dht11-hum">...</span></h5>
-          </h3>
-        </div>
-
-        <div>
-          <h3>
-            Date:
-            <h5><span id="dht11-date">...</span></h5>
-          </h3>
-        </div>
-
-        <a
-          type="button"
-          class="btn btn-secondary btn-lg btn-block"
-          href="new_plant"
-          >New Plant</a
-        >
-      </div>
     </div>
-  </div>
-</body>
 
-{% endblock %}
+
+    {% endblock %}

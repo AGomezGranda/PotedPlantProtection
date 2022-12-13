@@ -3,26 +3,43 @@
 {% block body %}
 <br>
 <h2 class="text-center"> Profile Information </h2> </br>
+<div class="container-fluid">
+    <div class="row main-content bg-success text-center">
+        <div class="col-md-4 text-center company__info">
+            <span class="company__logo">
+                <img src="../static/img/Image.jpeg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                     width="200px" alt="profile"><h2><span class="fa fa-android"></span></h2>
+            </span>
+            <h4 class="company_title">
+                Dashboard
+            </h4>
+        </div>
+        <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+            <div class="container-fluid">
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <h2 class="">Welcome, {{ username }}</h2> <br>
+                        <table class="table">
+                            <tr>
+                                <th scope="col">Username:</th>
+                                <td>{{ username }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Password:</th>
+                                <td>***</td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Email:</th>
+                                <td>{{ email }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
-<div class="row">
-    <div class="col-sm-6 offset-sm-3">
-      <div class="jumbotron">
-        <h2 class = "">Welcome, {{ username }}</h2> <br>
-        <table class="table">
-            <tr>
-                <th scope="col">Username:</th>
-                <td>{{ username }}</td>
-            </tr>
-            <tr>
-                <th scope="col">Password:</th>
-                <td>{{ password }}</td>
-            </tr>
-            <tr>
-                <th scope="col">Email:</th>
-                <td>{{ email }}</td>
-            </tr>
-        </table>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}

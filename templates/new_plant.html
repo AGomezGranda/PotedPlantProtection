@@ -1,60 +1,52 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<br>
-<h2 class="text-center"> New Plant </h2>
-<br>
 
-<div class="row">
-    <div class="col-sm-6 offset-sm-3">
-        <div class="jumbotron">
-            <form action = "/new_plant" method="post">
-                <div class="form-group">
-                    <label for="getPlantName"> Plant Name </label>
-                    <input class="form-control" autocomplete="off" autofocus placeholder="Name" name="plantName" type="text">
+
+
+<div class="container-fluid">
+    <div class="row main-content bg-success text-center">
+        <div class="col-md-4 text-center company__info">
+            <span class="company__logo">
+                <img src="../static/img/Image.jpeg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                     width="200px" alt="profile"><h2><span class="fa fa-android"></span></h2>
+            </span>
+            <h4 class="company_title">
+            </h4>
+        </div>
+        <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+            <div class="container-fluid">
+                <div class="row">
+                    <h2>Add New Plant</h2>
                 </div>
-                
-                <!-- <div class="form-group">
-                    <label for="getPlantType"> Plant Type </label>
-                    <input class="form-control" autocomplete="off" autofocus placeholder="Type" name="plantType" type="text">
-                </div> -->
+                <div class="row">
+                    <form action="/new_plant" method="post" control="" class="form-group">
+                        <div class="msg">{{ msg }}</div>
+                        <div class="row">
+                            <input class="form__input" id="plantName" name="plantName" type="text" autocomplete="off" placeholder="Enter Your Plant Name" />
+                        </div>
 
-                <div class="form-group">
-                    <label for="getPlantType"> Plant Type </label>
-                    <select class="form-control" name="plantType">   
-                        <option disabled selected value="">Plant</option>
-                        {% for plantType in plantTypes%}
-                        <option value="{{plantType}}">{{plantType}}</option>
-                        {% endfor %}
-                    </select>
+                        <div class="form-group">
+                            <label for="getPlantType"> Plant Type </label>
+                            <select class="form-control" name="plantType">
+                                <option disabled selected value="">Plant</option>
+                                {% for plantType in plantTypes%}
+                                <option value="{{plantType}}">{{plantType}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+
+                        <div class="row">
+                            <input class="btn btn-primary" type="submit" value=" Insert Plant ">
+                        </div>
+                    </form>
                 </div>
-
-                <h5> {{ msg }} </h5>
-                
-                <!-- <div class="form-group">
-                    <label for="getTemperature"> Temperature </label>
-                    <input class="form-control" autocomplete="off" autofocus placeholder="Temperature" name="temperature" type="text">
+                <div class="row">
                 </div>
-
-                <div class="form-group">
-                    <label for="getUV"> UV </label>
-                    <input class="form-control" autocomplete="off" autofocus placeholder="UV" name="uv" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="getMoisture"> Moisture </label>
-                    <input class="form-control" autocomplete="off" autofocus placeholder="Moisture" name="moisture" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="getHumidity"> Humidity </label>
-                    <input class="form-control" autocomplete="off" autofocus placeholder="Humidity" name="humidity" type="text">
-                </div> -->
-
-                <input class="btn btn-primary" type="submit" value=" Insert Plant ">
-            </form>
+            </div>
         </div>
     </div>
-  </div>
+</div>
 
 {% endblock %}
