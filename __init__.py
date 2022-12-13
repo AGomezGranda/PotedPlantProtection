@@ -4,6 +4,8 @@ from flask_login import LoginManager, login_required, current_user, login_user, 
 import os
 import re
 import MySQLdb.cursors
+import hashlib
+    
 
 
 app = Flask(__name__)
@@ -33,8 +35,14 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
+
+        salt = "5gz"
+        db_password = password+salt
+        h = hashlib.md5(db_password.encode())
+        print(h.hexdigest())
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password, ))
+        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, h.hexdigest(), ))
         user = cursor.fetchone()
         if user:
             session['loggedin'] = True
@@ -70,6 +78,12 @@ def register():
         name = request.form['name']
         username = request.form['username']
         password = request.form['password']
+
+        salt = "5gz"
+        db_password = password+salt
+        h = hashlib.md5(db_password.encode())
+        print(h.hexdigest())
+
         email = request.form['email']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = % s', (username, ))
@@ -84,7 +98,7 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form !'
         else:
-            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s, %s, %s)', (name, username, password, email,))
+            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s, %s, %s)', (name, username, h.hexdigest(), email,))
             mysql.connection.commit()
             cursor.close()
             msg = 'You are registered! Click sign in below'
