@@ -1,0 +1,209 @@
+{% extends "layoutNotLogged.html" %}
+{% block body %}
+
+     <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero">
+    <div class="container position-relative">
+      <div class="row gy-5" data-aos="fade-in">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+          <h2>Welcome to <span>PottedPlantProtection</span></h2>
+          <p>Introducing an automated plant monitoring system for all people to use</p>
+          <div class="d-flex justify-content-center justify-content-lg-start">
+            <a href="#about" class="btn-get-started">Get Started</a>
+          </div>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2">
+          <img src="../static/img/pngPlant.png" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-boxes position-relative">
+      <div class="container position-relative">
+        <div class="row gy-4 mt-5">
+
+          <!--End Icon Box -->
+
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </section>
+  <!-- End Hero Section -->
+
+  <main id="main">
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>About Us</h2>
+            <p>We are an automted plant monitoring system based in Dundalk Currently Studying DkIT </p>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-lg-6">
+            <h3>How We Achieve This</h3>
+            <img src="../static/img/raspberry%20pi.jpg" class="img-fluid rounded-4 mb-4" alt="">
+            <p>With this project you can maximise the health and growth of your potted plants at home. Our target users range from regular people who have little to no technological experience or even experience with growing plants, to people who may have some experience in one of those areas and not the other. This system will cater to these types of users in several ways. This includes recommended growth conditions, simple IOT setup, and an understandable and accessible interface. Our goal is to assist and direct the system users on how to protect the plants they have at home and ensure they see to their maximum growing potential and lifespan. </p>
+            <p>This entails the use of sensors to record the plants’ health and condition. The sensors will record the crucial elements of the plants condition - water level, humidity, temperature, and light level. The application will allow for remote monitoring via an interface, of the plant conditions that have been recorded by the sensors. The system will also have summarized growing requirements for various plant types. This information will be in a connected database. With the help of our project a user can easily grow the perfect plant.</p>
+          </div>
+          <div class="col-lg-6">
+            <div class="content ps-0 ps-lg-5">
+              <p class="fst-italic">
+                What Sensors will we use
+              </p>
+              <ul>
+                <li><i class="bi bi-check-circle-fill"></i> DHT11 Heat & Humidity Sensor</li>
+                <li><i class="bi bi-check-circle-fill"></i> Capacitive Soil Moisture Sensor</li>
+                <li><i class="bi bi-check-circle-fill"></i> Si1145 Flora UV Index Sensor</li>
+              </ul>
+              <p>
+                Our goal is to provide each user with vital info such as "Heat", "Humidity", "Soil Moisture" and "UV index" and display it in a
+                  user-friendly way, so they would be able to see how their plant is doing whether they need to water or position the plant for more sunlight or heat/humidity
+
+              </p>
+
+              <div class="position-relative mt-4">
+                <img src="../static/img/PiDiagram.png" class="img-fluid rounded-4" alt="">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Us Section -->
+
+
+
+    <!-- ======= Our Services Section ======= -->
+    <section id="services" class="services sections-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Our Services</h2>
+        </div>
+
+        <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item  position-relative">
+              <div class="icon">
+                <i class="bi bi-activity"></i>
+              </div>
+              <h3>Temperature Monitoring</h3>
+                <p>We use the DHT11 as its power efficient to record temperatures every hour giving insight to the plants required heat conditions</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-broadcast"></i>
+              </div>
+              <h3>Humidity Monitoring</h3>
+              <p>We use the same DHT11 as used in heat sensor to record humidity every hour, allowing insight into the plants specific climate for growing</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-easel"></i>
+              </div>
+              <h3>Sunlight Monitoring</h3>
+              <p>We use the Si1145 to record the UV level every hour deciding if the plant receives enough sunlight or if it's too sunny to water plants</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-bounding-box-circles"></i>
+              </div>
+              <h3>Soil Moisture Monitoring</h3>
+              <p>We use a capacitive soil moisture sensor to negate corrosion allowing us to monitor the moisture of the soil indicating whether a user should water the plant or not </p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-calendar4-week"></i>
+              </div>
+              <h3>Notifications</h3>
+                <p>From our sensors we will gather the information compare them against our data for specific plants and send you notifications based on urgency of the plant</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-chat-square-text"></i>
+              </div>
+              <h3>Raspberry Pi 4</h3>
+                <p>We use the Raspberry pi4 as a microcontroller to record data and send it onto a server so you are able to enjoy knowing the fact your plant is healthy</p>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+    </section><!-- End Our Services Section -->
+
+
+
+    <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Our Team</h2>
+        </div>
+
+        <div class="row gy-4">
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="member">
+              <img src="../static/img/team/Kyle.png" class="img-fluid" alt="">
+              <h4>Kyle McQuillan</h4>
+              <span>Front-end Development & Soil Moisture Sensor</span>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="member">
+              <img src="../static/img/team/Alvaro.png" class="img-fluid" alt="">
+              <h4>Alvaro Gomez</h4>
+              <span>Backend Development & Heat Sensor</span>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+              <img src="../static/img/team/Tim.png" class="img-fluid" alt="">
+              <h4>Tim Adejumo</h4>
+              <span>UX Design User Testing & Light Sensor</span>
+
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="member">
+              <img src="../static/img/team/angel" class="img-fluid" alt="">
+              <h4>Angel Martinez</h4>
+              <span>Database & Humidity Sensor</span>
+
+            </div>
+          </div><!-- End Team Member -->
+
+        </div>
+
+      </div>
+    </section><!-- End Our Team Section -->
+
+  </main>
+{% endblock %}

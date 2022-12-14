@@ -24,7 +24,7 @@ PLANTS = ['Aloe Vera', 'Peace Lily', 'Lemon Tree']
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("indexNotLogged.html")
     elif request.method == "POST":
       return render_template("greet.html")
 
@@ -102,6 +102,7 @@ def register():
             mysql.connection.commit()
             cursor.close()
             msg = 'You are registered! Click sign in below'
+            return render_template('login.html', msg = msg)
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg)
@@ -202,9 +203,14 @@ def plant_info():
 def notifications():
     return render_template("notifications.html")
 
+@app.route("/home")
+def home():
+    return render_template("index.html")
+
 @app.route("/about")
 def about():
     return render_template("about.html")
+
 
 
 if __name__ == '__main__':
