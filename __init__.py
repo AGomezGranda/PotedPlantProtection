@@ -1,10 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import *
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
+from flask_session import Session
 import os
 import re
 import MySQLdb.cursors
 import hashlib
+import datetime
+
+from pubnub.enums import PNStatusCategory
+from pubnub.callbacks import SubscribeCallback
+from pubnub.pnconfiguration import PNConfiguration
+from pubnub.pubnub import PubNub
     
 
 
@@ -199,20 +206,7 @@ def plant_info():
     
     return render_template("plant_info.html", username=session['username'], inventary=inventary, newPlantData=newPlantData)
 
-
-@app.route("/save", methods=["POST"])
-def save():
-    #api rest to save the data from the sensor
-    if request.method == "POST":
-        data = request.get_json()
-        print(data)
-        #insert the data in the database
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO eventsdht11 (idPlant, temperature, humidity, date) VALUES (%s, %s, %s, %s)", (1, data['temperature'], data['humidity'], data['date']))
-        mysql.connection.commit()
-        cur.close()
-        return "OK"
-        
+       
 @app.route("/notifications")
 def notifications():
     return render_template("notifications.html")
@@ -227,6 +221,101 @@ def about():
 
 
 
+myChannel = "Channel-Pumpkin"
+sensorList = ["dht-11"]
+data = {}
+
+pnconfig = PNConfiguration()
+pnconfig.subscribe_key = 'sub-c-99b2f757-497d-4a91-861b-95ce13125533'
+pnconfig.publish_key = 'pub-c-d6e8028a-60ab-4860-85d8-84e6af8d04a6'
+# pnconfig.user_id = '94af794a-7593-11ed-a1eb-0242ac120002'
+pnconfig.uuid = '94af794a-7593-11ed-a1eb-0242ac120002'
+pubnub = PubNub(pnconfig)
+
+#pubnub.subscribe() \
+    #.channels(myChannel) \
+    #.execute()
+
+
+# # mysql app
+# mysql = MySQL(app)
+# # flask session
+# Session(app)
+
+
+def publish(custom_channel, msg):
+    pubnub.publish().channel(custom_channel).message(msg).pn_async(my_publish_callback)
+
+
+def my_publish_callback(envelope, status):
+    # Check whether request successfully completed or not
+    if not status.is_error():
+        pass  # Message successfully published to specified channel.
+    else:
+        print("not published")
+        print(status)
+        print(status.is_error())
+        pass  # Handle message publish error. Check 'category' property to find out possible issue
+        # because of which request did fail.
+        # Request can be resent using: [status retry];
+
+
+class MySubscribeCallback(SubscribeCallback):
+    def presence(self, pubnub, presence):
+        pass  # handle incoming presence data
+
+    def status(self, pubnub, status):
+        if status.category == PNStatusCategory.PNUnexpectedDisconnectCategory:
+            pass  # This event happens when radio / connectivity is lost
+
+        elif status.category == PNStatusCategory.PNConnectedCategory:
+            # Connect event. You can do stuff like publish, and know you'll get it.
+            # Or just use the connected event to confirm you are subscribed for
+            # UI / internal notifications, etc
+            pubnub.publish().channel(myChannel).message({"Connection": "Connected to PubNub"}).pn_async(
+                my_publish_callback)
+        elif status.category == PNStatusCategory.PNReconnectedCategory:
+            pass
+            # Happens as part of our regular operation. This event happens when
+            # radio / connectivity is lost, then regained.
+        elif status.category == PNStatusCategory.PNDecryptionErrorCategory:
+            pass
+            # Handle message decryption error. Probably client configured to
+            # encrypt messages and on live data feed it received plain text.
+
+    def message(self, pubnub, message):
+        print("Message payload: %s" % message.message)
+        print("Message publisher: %s" % message.publisher)
+        msg = message.message
+
+        with app.app_context():
+            key = list(msg.keys())
+            print(key)
+            if key[0] == "dht11":
+                cur = mysql.connection.cursor() 
+
+                dht11Data = message.message['dht11']
+
+                temp = dht11Data['Temperature']
+                hum = dht11Data['Humidity']
+                date = dht11Data['Date']
+                print("dht11Data : ",dht11Data)
+
+                print(date)
+                print(hum)
+                print(date)
+
+                print(message.message['dht11'])
+                cur.execute(''' INSERT INTO eventsdht11 VALUES(%s,%s,%s)''',
+                            (temp, hum, date))
+                mysql.connection.commit()
+                cur.close()
+
+            else:
+                print("Neither scan nor match")
+
+pubnub.add_listener(MySubscribeCallback())
+
 if __name__ == '__main__':
         
     login_manager = LoginManager()
@@ -237,6 +326,8 @@ if __name__ == '__main__':
     def load_user(user_id):
         # since the user_id is just the primary key of our user table, use it in the query for the user
         return User.query.get(int(user_id))
-
+    
+    pubnub.subscribe().channels(myChannel).execute()
+    
     app.debug = True
     app.run()
